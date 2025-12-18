@@ -13,15 +13,5 @@ urlpatterns = [
     path('mascotasxtipo/<int:idTipo>',views.mascotasxtipo,name='mascotasxtipo'),
     path('detalleMascota/<int:idMascota>',views.detalleMascota,name='detalleMascota'),
     path('cerrarSesion',views.cerrarSesion,name='cerrarSesion'),
-
-    """
-    =========================================================
-    SECCIÓN: RUTEAR LA VISTA POSTS_MASCOTA
-    ---------------------------------------------------------
-    TODO: Crear la ruta a la funcion posts_mascota teniendo
-    en cuenta los arguementos requeridos.
-    =========================================================
-    """
-
-
+    path('mascota/<int:mascota_id>/posts/', views.posts_mascota, name='posts_mascota'),
 ]

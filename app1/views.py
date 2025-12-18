@@ -177,17 +177,34 @@ def cerrarSesion(request):
     return HttpResponseRedirect(reverse('app1:ingreso'))
 
 
+@login_required(login_url='/')
+def posts_mascota(request, mascota_id):
+    """
+    Vista para registrar nuevos posts y visualizar la galería/timeline de una mascota.
+    """
+    # Obtener la mascota usando el id de la URL
+    mascota = get_object_or_404(Mascota, id=mascota_id)
+    
+    # Obtener todos los posts relacionados con esta mascota, ordenados por fecha descendente
+    posts = mascota.posts.all()  # Gracias al related_name='posts' en el modelo
 
-"""
-    =========================================================
-    SECCIÓN: CREAR LA FUNCION POSTS_MASCOTA
-    ---------------------------------------------------------
-    TODO: Crear la funcion que permita gestionar los metodos
-    POST y GET. El metodo GET debe devolver el template con
-    las variables de contexto y el metodo POST debe guardar
-    el nuevo objeto creado. El redireccionamieto luego de
-    gestionar el metodo POST debe ir hacia la misma ruta 
-    posts_mascota, tener en cuenta que se debe enviar el 
-    argumento del id adecuadamente.
-    =========================================================
-"""
+    if request.method == 'POST':
+        # Procesar el formulario enviado
+        form = PostMascotaForm(request.POST, request.FILES)
+        if form.is_valid():
+            nuevo_post = form.save(commit=False)  # No guardar aún en la BD
+            nuevo_post.mascota = mascota  # Asignar la relación con la mascota
+            nuevo_post.save()  # Ahora sí guardar
+            return redirect('posts_mascota', mascota_id=mascota.id)  # Redirigir para evitar reenvío
+    else:
+        # GET: Mostrar formulario vacío
+        form = PostMascotaForm()
+
+    # Contexto para la plantilla
+    context = {
+        'mascota': mascota,
+        'form': form,
+        'posts': posts,
+    }
+
+    return render(request, 'posts_mascota.html', context)

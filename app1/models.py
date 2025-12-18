@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date 
 
 # Create your models here.
 class TipoMascota(models.Model):
@@ -33,12 +34,21 @@ class Adopcion(models.Model):
     fecha_adopcion = models.CharField(max_length=20,null=True,blank=True)
 
 
+class PostMascota(models.Model):   
+    mascota = models.ForeignKey(
+        'Mascota',  # Asegúrate de que el nombre del modelo Mascota sea exactamente así
+        on_delete=models.CASCADE,
+        related_name='posts'  # Esto te permitirá acceder como mascota.posts.all()
+    )
+    titulo = models.CharField(max_length=200)
+    descripcion = models.TextField(blank=True)  # blank=True para que sea opcional en formularios
+    fecha = models.DateField(default=date.today, help_text="Fecha en que ocurrió este momento")
+    foto = models.ImageField(upload_to='mascotas/posts/')  # Se guardará en media/mascotas/posts/
 
-"""
-    =========================================================
-    SECCIÓN: CREAR EL MODELO PostMascota
-    ---------------------------------------------------------
-    TODO: Crear el modelo PostMascota con los campos
-    y relaciones indicados en el examen
-    =========================================================
-"""
+    class Meta:
+        ordering = ['-fecha']  # Los posts más recientes primero
+        verbose_name = 'Post de Mascota'
+        verbose_name_plural = 'Posts de Mascotas'
+
+    def __str__(self):
+        return f"{self.titulo} - {self.mascota.nombre}"

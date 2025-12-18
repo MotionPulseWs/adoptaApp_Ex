@@ -1,5 +1,7 @@
 from django import forms
-from .models import TipoMascota, Mascota, Persona
+from .models import *
+from datetime import date
+from django.core.exceptions import ValidationError
 
 class TipoMascotaForm(forms.ModelForm):
     class Meta:
@@ -40,12 +42,47 @@ class TipoMascotaForm(forms.ModelForm):
         return cleaned
     
     
-    
-    
-    """
-        =========================================================
-         SECCIÓN: CREAR EL FORMULARIO PostMascotaForm
-         ---------------------------------------------------------
-         TODO: Crear el formulario con los campos indicados
-        =========================================================
-    """
+class PostMascotaForm(forms.ModelForm):
+    class Meta:
+        model = PostMascota
+        fields = ['titulo', 'descripcion', 'fecha', 'foto']
+        widgets = {
+            'titulo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ej: Balto jugando en el parque',
+                'label': 'Título del post'
+            }),
+            'descripcion': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Describe este momento especial de la mascota...',
+                'rows': 4,
+                'label': 'Descripción'
+            }),
+            'fecha': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date',  # Muestra el calendario nativo del navegador
+                'label': 'Fecha del momento'
+            }),
+            'foto': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+                'label': 'Fotografía'
+            }),
+        }
+        labels = {
+            'titulo': 'Título del post',
+            'descripcion': 'Descripción',
+            'fecha': 'Fecha del momento',
+            'foto': 'Fotografía',
+        }
+
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        if descripcion and len(descripcion) < 20:
+            raise ValidationError('La descripción debe tener al menos 20 caracteres.')
+        return descripcion
+
+    def clean_fecha(self):
+        fecha = self.cleaned_data.get('fecha')
+        if fecha and fecha > date.today():
+            raise ValidationError('No se puede registrar una publicación con fecha futura.')
+        return fecha
