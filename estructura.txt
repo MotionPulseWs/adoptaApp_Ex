@@ -31,6 +31,11 @@ adoptaApp_Ex/
 │   └── views.py
 ├── media
 │   └── mascotas
+│       ├── posts
+│       │   ├── 071ffe59-c773-48a8-883c-ff1c3c636e64.jpg
+│       │   ├── baltoimg2.jpg
+│       │   ├── catgame.png
+│       │   └── galfieldFriends.jpg
 │       ├── balto.jpg
 │       └── garfield.jpg
 ├── db.sqlite3

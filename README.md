@@ -1,9 +1,18 @@
-# adoptaApp_Ex
-# clase-python-pucp
+# Kadir Kevin Castillo Ancco
+# AdoptaApp - Examen Final
 
-# miRedSocial
+Implementación del módulo **Galería de Momentos** para cada mascota.
 
-Proyecto de red social desarrollado con Django y Django REST Framework.
+## Funcionalidades agregadas
+- Modelo `PostMascota` con relación ForeignKey a Mascota
+- Campo foto obligatorio (ImageField)
+- Formulario con validaciones:
+  - Descripción mínima 20 caracteres
+  - Fecha no futura
+- Vista `posts_mascota` con manejo GET/POST
+- Plantilla responsive con Bootstrap mostrando galería en cards
+- Botón en detalle de mascota para acceder a la galería
+- Subida de imágenes funcional
 
 ## Requisitos Previos
 
@@ -115,16 +124,6 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### Recolectar archivos estáticos (producción)
-```bash
-python manage.py collectstatic
-```
-
-### Generar archivo requirements.txt
-```bash
-pip freeze > requirements.txt
-```
-
 ## Desactivar el Entorno Virtual
 
 Cuando termines de trabajar:
@@ -132,20 +131,6 @@ Cuando termines de trabajar:
 deactivate
 ```
 
-## Solución de Problemas Comunes
-
-### Error: ModuleNotFoundError
-
-Si aparece un error de módulo no encontrado, instálalo con:
-```bash
-pip install <nombre_del_modulo>
-```
-
-### Error: No such file or directory 'requirements.txt'
-
-Si no existe el archivo, genera uno nuevo:
-```bash
-pip freeze > requirements.txt
 ```
 
 ### El servidor no inicia
