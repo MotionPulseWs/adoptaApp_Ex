@@ -8,6 +8,8 @@ adoptaApp_Ex/
 ├── app1
 │   ├── migrations
 │   │   ├── 0001_initial.py
+│   │   ├── 0002_postmascota.py
+│   │   ├── 0003_alter_postmascota_fecha.py
 │   │   └── __init__.py
 │   ├── templates
 │   │   ├── crearMascota.html
@@ -32,6 +34,7 @@ adoptaApp_Ex/
 │       ├── balto.jpg
 │       └── garfield.jpg
 ├── db.sqlite3
+├── estructura.txt
 ├── generar_estructura.py
 ├── manage.py
 └── README.md

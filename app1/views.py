@@ -7,7 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import TipoMascotaForm
+from .forms import TipoMascotaForm, PostMascotaForm
+from django.shortcuts import render, get_object_or_404, redirect
+from django import forms
+from .models import PostMascota
 
 # Create your views here.
 def ingreso(request):
@@ -183,14 +186,14 @@ def posts_mascota(request, mascota_id):
     Vista para registrar nuevos posts y visualizar la galería/timeline de una mascota.
     """
     # Obtener la mascota usando el id de la URL
-    mascota = get_object_or_404(Mascota, id=mascota_id)
+    mascota = get_object_or_404(Mascota, id=mascota_id) 
     
     # Obtener todos los posts relacionados con esta mascota, ordenados por fecha descendente
     posts = mascota.posts.all()  # Gracias al related_name='posts' en el modelo
 
     if request.method == 'POST':
         # Procesar el formulario enviado
-        form = PostMascotaForm(request.POST, request.FILES)
+        form = PostMascotaForm(request.POST, request.FILES)        
         if form.is_valid():
             nuevo_post = form.save(commit=False)  # No guardar aún en la BD
             nuevo_post.mascota = mascota  # Asignar la relación con la mascota
