@@ -36,17 +36,17 @@ class Adopcion(models.Model):
 
 class PostMascota(models.Model):   
     mascota = models.ForeignKey(
-        'Mascota',  # Asegúrate de que el nombre del modelo Mascota sea exactamente así
+        'Mascota',  
         on_delete=models.CASCADE,
-        related_name='posts'  # Esto te permitirá acceder como mascota.posts.all()
+        related_name='posts'  
     )
     titulo = models.CharField(max_length=200)
-    descripcion = models.TextField(blank=True)  # blank=True para que sea opcional en formularios
+    descripcion = models.TextField(blank=True)  
     fecha = models.DateField(default=date.today, help_text="Fecha en que ocurrió este momento")
-    foto = models.ImageField(upload_to='mascotas/posts/')  # Se guardará en media/mascotas/posts/
+    foto = models.ImageField(upload_to='mascotas/posts/') 
 
     class Meta:
-        ordering = ['-fecha']  # Los posts más recientes primero
+        ordering = ['-fecha']  
         verbose_name = 'Post de Mascota'
         verbose_name_plural = 'Posts de Mascotas'
 

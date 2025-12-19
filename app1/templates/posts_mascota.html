@@ -45,6 +45,7 @@
     <!-- =========================================================
          SECCIÓN: FORMULARIO PARA CREAR NUEVOS POSTS
          ========================================================= -->
+
     <hr class="mt-5 mb-4">
 
     <h3>Registrar nuevo momento / publicación</h3>
@@ -61,7 +62,7 @@
             </div>
         {% endif %}
 
-        <!-- Campos del formulario con estilo Bootstrap -->
+        <!-- Campos del formulario  -->
         <div class="mb-3">
             {{ form.titulo.label_tag }}
             {{ form.titulo }}
@@ -101,10 +102,10 @@
     <!-- =========================================================
          SECCIÓN: BOTÓN PARA VOLVER
          ========================================================= -->
+
          <a href="{% url 'app1:home' %}" class="btn btn-secondary mt-3">
         <i class="fa-solid fa-arrow-left me-1"></i> Volver
-      </a>
-    
+      </a>    
 
 </div>
 {% endblock %}

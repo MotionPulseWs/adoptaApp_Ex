@@ -189,21 +189,20 @@ def posts_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id=mascota_id) 
     
     # Obtener todos los posts relacionados con esta mascota, ordenados por fecha descendente
-    posts = mascota.posts.all()  # Gracias al related_name='posts' en el modelo
+    posts = mascota.posts.all()  
 
     if request.method == 'POST':
         # Procesar el formulario enviado
         form = PostMascotaForm(request.POST, request.FILES)        
         if form.is_valid():
-            nuevo_post = form.save(commit=False)  # No guardar aún en la BD
-            nuevo_post.mascota = mascota  # Asignar la relación con la mascota
-            nuevo_post.save()  # Ahora sí guardar
-            return redirect('posts_mascota', mascota_id=mascota.id)  # Redirigir para evitar reenvío
+            nuevo_post = form.save(commit=False)  
+            nuevo_post.mascota = mascota  
+            nuevo_post.save()  
+            return redirect('app1:posts_mascota', mascota_id=mascota.id) 
     else:
         # GET: Mostrar formulario vacío
         form = PostMascotaForm()
-
-    # Contexto para la plantilla
+    
     context = {
         'mascota': mascota,
         'form': form,
